@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CodeStudioZ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .input-container {
+            margin: 20px auto;
+            width: 70%;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .preview-button,
+        .save-button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #428bca;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Make a Script</h1>
+    <div class="input-container">
+        <textarea id="htmlCode" placeholder="Enter your HTML code script "></textarea>
+        <button class="preview-button" onclick="previewHTML()">Preview HTML</button>
+        <button class="save-button" onclick="saveAsHTML()">Download your html</button>
+    </div>
+    <div id="preview"></div>
+
+    <script>
+        function previewHTML() {
+            const htmlCode = document.getElementById('htmlCode').value;
+            const previewDiv = document.getElementById('preview');
+            previewDiv.innerHTML = htmlCode;
+        }
+
+        function saveAsHTML() {
+            const htmlCode = document.getElementById('htmlCode').value;
+            const blob = new Blob([htmlCode], { type: 'text/html' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'MAKE_SCRIPT.html';
+            link.click();
+        }
+    </script>
+</body>
+</html>
