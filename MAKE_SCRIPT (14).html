@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Interactive Game with Persistent Ban</title>
+  <style>
+    /* ... (styles as before) ... */
+  </style>
+</head>
+<body>
+  <div id="login-section">
+    <input type="text" id="username" placeholder="Enter username">
+    <button id="login">Login</button>
+  </div>
+  
+  <button id="play-button" style="display: none;">Play</button>
+  <div id="game-container" style="display: none;"></div>
+
+  <script>
+    const usernameInput = document.getElementById('username');
+    const loginButton = document.getElementById('login');
+    const playButton = document.getElementById('play-button');
+    const gameContainer = document.getElementById('game-container');
+    let badUsernameAttempts = {};
+    const bannedUsernames = JSON.parse(localStorage.getItem('bannedUsernames') || '[]');
+
+    loginButton.addEventListener('click', () => {
+      const username = usernameInput.value.toLowerCase();
+
+      if (bannedUsernames.includes(username)) {
+        alert('You are banned. Come back after your ban period is over.');
+      } else if (badUsernameAttempts[username] >= 9) {
+        const currentTime = new Date().getTime();
+        bannedUsernames.push(username);
+        localStorage.setItem('bannedUsernames', JSON.stringify(bannedUsernames));
+        localStorage.setItem('banEndTime_' + username, currentTime + 2 * 24 * 60 * 60 * 1000); // 2 days in milliseconds
+        alert('You are banned for 2 days.');
+      } else if (username === 'butt' || username === 'wtf') {
+        if (!badUsernameAttempts[username]) {
+          badUsernameAttempts[username] = 1;
+        } else {
+          badUsernameAttempts[username]++;
+        }
+        alert('Bad username. Choose another.');
+      } else {
+        usernameInput.disabled = true;
+        loginButton.disabled = true;
+        playButton.style.display = 'block';
+        gameContainer.style.display = 'block';
+      }
+    });
+
+    playButton.addEventListener('click', () => {
+      playButton.style.display = 'none';
+      createBlocksAndBalls();
+    });
+
+    // ... (ball creation and popping code as before) ...
+
+    function isNextDay() {
+      const now = new Date();
+      const nextDay = new Date(now);
+      nextDay.setHours(22, 11, 0, 0);
+      nextDay.setDate(nextDay.getDate() + 1);
+      return now > nextDay;
+    }
+
+    function isBanOver(username) {
+      const banEndTime = parseInt(localStorage.getItem('banEndTime_' + username));
+      return new Date().getTime() > banEndTime;
+    }
+
+    if (isNextDay()) {
+      for (const username of bannedUsernames) {
+        if (isBanOver(username)) {
+          bannedUsernames.splice(bannedUsernames.indexOf(username), 1);
+          localStorage.removeItem('banEndTime_' + username);
+        }
+      }
+      localStorage.setItem('bannedUsernames', JSON.stringify(bannedUsernames));
+    }
+
+    for (const username of bannedUsernames) {
+      if (!isBanOver(username)) {
+        usernameInput.disabled = true;
+        loginButton.disabled = true;
+        playButton.style.display = 'none';
+        gameContainer.style.display = 'none';
+        alert('You are banned. Come back after your ban period is over.');
+        break;
+      }
+    }
+  </script>
+</body>
+</html>
