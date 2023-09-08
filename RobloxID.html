@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Profile Viewer</title>
+</head>
+<body>
+    <h1>Roblox Profile Viewer</h1>
+    <input type="text" id="profileId" placeholder="Enter Roblox Profile ID">
+    <button id="viewProfileButton">View Profile</button>
+
+    <script>
+        const viewProfileButton = document.getElementById('viewProfileButton');
+        const profileIdInput = document.getElementById('profileId');
+
+        viewProfileButton.addEventListener('click', () => {
+            const profileId = profileIdInput.value.trim();
+            
+            // Check if the profile ID is empty.
+            if (!profileId) {
+                alert('Please enter a valid Roblox Profile ID.');
+                return;
+            }
+
+            // Redirect the user to the Roblox profile page.
+            const profileUrl = `https://www.roblox.com/users/${profileId}/profile`;
+            window.location.href = profileUrl;
+        });
+    </script>
+</body>
+</html>
