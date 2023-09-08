@@ -1,53 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Money Transfer Simulation</title>
+<style>
+  .center {
+    text-align: center;
+    color: green;
+  }
+</style>
 </head>
 <body>
-    <button id="transfer-button">Add Card ID</button>
-    <div id="status"></div>
-    <input type="text" id="user-input" placeholder="Type 'ID card' here...">
-    <script>
-        const transferButton = document.getElementById("transfer-button");
-        const statusDiv = document.getElementById("status");
-        const userInput = document.getElementById("user-input");
-        
-        let cardIdAdded = false;
-        let amountTransferred = 0;
-
-        transferButton.addEventListener("click", function() {
-            if (!cardIdAdded) {
-                statusDiv.innerHTML = "Please type 'ID card' in the input box below.";
-            } else {
-                statusDiv.innerHTML = "Card ID already added. Transferring money to your bank account...";
-                userInput.style.display = "none";
-                // Simulate a delay for the transfer
-                setTimeout(function() {
-                    if (amountTransferred === 0) {
-                        amountTransferred = 5000;
-                        statusDiv.innerHTML = `$5000 transferred to your bank account. Total: $${amountTransferred}`;
-                    } else {
-                        statusDiv.innerHTML = "You have already received a transfer.";
-                    }
-                }, 5000); // Simulating a 5-second transfer delay
-            }
-        });
-
-        userInput.addEventListener("keyup", function(event) {
-            if (event.key === "Enter") {
-                const userAnswer = userInput.value.toLowerCase();
-                if (userAnswer === "id card") {
-                    cardIdAdded = true;
-                    userInput.style.display = "none";
-                    transferButton.click();
-                } else {
-                    statusDiv.innerHTML = "Invalid input. Please type 'ID card' to initiate the transfer.";
-                }
-                userInput.value = "";
-            }
-        });
-    </script>
+  <p class="center">Sorry, try later</p>
 </body>
 </html>
