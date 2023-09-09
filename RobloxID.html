@@ -7,26 +7,40 @@
 </head>
 <body>
     <h1>Roblox Profile Viewer</h1>
-    <input type="text" id="profileId" placeholder="Enter Roblox Profile ID">
-    <button id="viewProfileButton">View Profile</button>
+    <p>Enter a Roblox username to view their profile:</p>
+    <input type="text" id="usernameInput" placeholder="Roblox Username">
+    <button onclick="viewProfile()">View Profile</button>
 
     <script>
-        const viewProfileButton = document.getElementById('viewProfileButton');
-        const profileIdInput = document.getElementById('profileId');
-
-        viewProfileButton.addEventListener('click', () => {
-            const profileId = profileIdInput.value.trim();
-            
-            // Check if the profile ID is empty.
-            if (!profileId) {
-                alert('Please enter a valid Roblox Profile ID.');
+        function viewProfile() {
+            const username = document.getElementById("usernameInput").value;
+            if (username.trim() === "") {
+                alert("Please enter a valid Roblox username.");
                 return;
             }
 
-            // Redirect the user to the Roblox profile page.
-            const profileUrl = `https://www.roblox.com/users/${profileId}/profile`;
+            // Construct the Roblox profile URL
+            const profileUrl = `https://www.roblox.com/users/profile?username=${username}`;
+
+            // Redirect to the profile URL
             window.location.href = profileUrl;
-        });
+        }
     </script>
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image at the Bottom</title>
+</head>
+<body>
+    <!-- Your content goes here -->
+
+    <!-- To place the image at the bottom, you can use CSS -->
+    <figure style="position: absolute; bottom: 0; left: 0;">
+        <img src="C:\Users\Nancy_Princesse\Downloads\Png (5).png" alt="Image Description">
+        <figcaption> <div Creator="" tDBSJJGEHDB=""></div></figcaption>
+    </figure>
 </body>
 </html>
