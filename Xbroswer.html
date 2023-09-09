@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>New Tab</title>
+  <style>
+    body {
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #search-container {
+      text-align: center;
+    }
+
+    #search-bar {
+      width: 400px;
+      padding: 10px;
+      border: none;
+      background-color: transparent;
+      color: white;
+    }
+
+    #search-button {
+      background-color: transparent;
+      color: white;
+      border: 1px solid white;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    #search-button:hover {
+      background-color: white;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div id="search-container">
+    <form action="https://www.google.com/search" method="GET">
+      <input type="text" name="q" id="search-bar" placeholder="Search Google">
+      <input type="submit" value="Search" id="search-button">
+    </form>
+  </div>
+</body>
+</html>
