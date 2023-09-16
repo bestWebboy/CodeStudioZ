@@ -1,91 +1,42 @@
-npm init -y
-npm install express openai
-const express = require('express');
-const { OpenAIApi } = require('openai');
-
-const app = express();
-const port = process.env.PORT || 3000;
-
-// Configure your OpenAI API key
-const openai = new OpenAIApi({
-  key: 'your-openai-api-key',
-});
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
-});
-
-app.post('/chat', async (req, res) => {
-  const { message } = req.body;
-
-  try {
-    // Generate HTML and JavaScript code based on the user's message
-    const response = await openai.createCompletion({
-      engine: 'text-davinci-002',
-      prompt: `Generate HTML and JavaScript for: ${message}`,
-      max_tokens: 100,
-    });
-
-    const generatedCode = response.choices[0].text;
-
-    // Send the generated code as the response
-    res.json({ code: generatedCode });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'An error occurred' });
-  }
-});
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart HTML Chatbot</title>
+    <title>Interactive HTML Page</title>
 </head>
 <body>
-    <h1>Smart HTML Chatbot</h1>
-    <form id="chat-form">
-        <input type="text" id="message" placeholder="Type your query">
-        <button type="submit">Ask</button>
-    </form>
-    <div id="code-output">
-        <!-- Generated code will be displayed here -->
+    <h1>Interactive HTML Page</h1>
+
+    <div id="content">
+        <!-- This is the default content of the website -->
+        <p>This is the default content of the website.</p>
     </div>
+
+    <form id="code-form">
+        <label for="code">Enter the code:</label>
+        <input type="text" id="code" placeholder="e.g., 34spt">
+        <button type="submit">Apply Code</button>
+    </form>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const chatForm = document.getElementById('chat-form');
-            const messageInput = document.getElementById('message');
-            const codeOutput = document.getElementById('code-output');
+        const content = document.getElementById('content');
+        const codeForm = document.getElementById('code-form');
+        const codeInput = document.getElementById('code');
 
-            chatForm.addEventListener('submit', async function (event) {
-                event.preventDefault();
-                const message = messageInput.value;
+        codeForm.addEventListener('submit', function (event) {
+            event.preventDefault();
 
-                // Send the user's message to the server
-                const response = await fetch('/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ message }),
-                });
+            const enteredCode = codeInput.value;
 
-                if (response.ok) {
-                    const { code } = await response.json();
-                    codeOutput.innerHTML = code;
-                } else {
-                    codeOutput.innerHTML = 'Error: Unable to generate code';
-                }
-            });
+            if (enteredCode === '34spt') {
+                // Replace the content with a 3D block
+                content.innerHTML = '<div style="width: 100px; height: 100px; background-color: blue; transform: rotateX(45deg);"></div>';
+            } else {
+                // Revert to default content
+                content.innerHTML = '<p>This is the default content of the website.</p>';
+            }
         });
     </script>
 </body>
 </html>
-node index.js
