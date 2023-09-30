@@ -1,27 +1,80 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>zCODEcRASH</title>
+    <title>CodeHome</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-
-        h1 {
-            font-size: 3rem;
             text-align: center;
-            color: red;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #333;
+        }
+        #htmlForm {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            width: 80%;
+            max-width: 800px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        #htmlCode {
+            width: 100%;
+            min-height: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        #downloadButton {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #downloadButton:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <h1>Sorry, this has crashed. Come back later.</h1>
+    <h1>Generate HTML Code</h1>
+    
+    <form id="htmlForm">
+        <label for="htmlCode">Enter your HTML code:</label>
+        <textarea id="htmlCode" rows="10" cols="50"></textarea>
+        <br>
+        <button type="button" id="downloadButton">Download HTML</button>
+    </form>
+
+    <script>
+        // Function to trigger the download of the HTML file
+        function downloadHTML() {
+            const htmlContent = document.getElementById("htmlCode").value;
+            const blob = new Blob([htmlContent], { type: "text/html" });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "generated.html";
+            a.style.display = "none";
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        }
+
+        document.getElementById("downloadButton").addEventListener("click", downloadHTML);
+    </script>
 </body>
 </html>
